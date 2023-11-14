@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APIs </title>
+
+    <style>
+        .card{
+            width: 400px;
+            margin: auto;
+            text-align: center;
+            background-color: aqua;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .image{
+            height: 200px;
+            width: 200px;
+            border-radius: 10px;
+            border: 30px;
+            border-color: white;
+        }
+        .bar{
+            display: flex;
+            justify-content: space-around;
+
+        }
+    </style>
+</head>
+<body>
+   <div class="card">
+    <img  alt="image" class="image">
+    <h1 class="name">User Name</h1>
+    <h3 class="bio">This is bio of this APIs !</h3>
+    <div class="bar">
+        <h3 class="follower"></h3>
+        <h3 class="following"></h3>
+
+    </div>
+    <center><h2 class="from"></h2></center>
+   </div> 
+</body>
+<script>
+
+    let nameOfUser = prompt("enter your github username !")
+
+    const from = document.querySelector('.from');
+    const name = document.querySelector('.name');
+    const bio = document.querySelector('.bio');
+    const follower = document.querySelector('.follower');
+    const following = document.querySelector('.following');
+    const image = document.querySelector('.image');
+    const ru = "https://api.github.com/users/"+nameOfUser;
+    const requestUrl = ru;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl);
+  xhr.onreadystatechange = function(){
+  
+      console.log(xhr.readyState);
+      if (xhr.readyState === 4){
+        const data = JSON.parse(this.responseText);
+
+        console.log(data)
+        console.log(typeof data)
+    console.log(data.bio)  
+
+    image.src =  data.avatar_url;
+name.innerHTML = data.name;
+bio.innerHTML = data.bio;
+
+from.innerHTML = data.location;
+
+follower.innerHTML = data.followers + " followers";    
+following.innerHTML = data.following + " following";    
+
+ 
+}
+
+  }
+    xhr.send();
+</script>
+</html>
